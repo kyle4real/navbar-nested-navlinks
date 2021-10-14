@@ -89,16 +89,21 @@ export const SNav = styled.nav`
         display: flex;
     }
 `;
+// export const SRelativeContainer = styled.div`
+//     height: 100%;
+//     display: flex;
+//     width: auto;
+// `;
 export const SNavLinkContainer = styled.div`
     height: 100%;
-    position: relative;
     z-index: 10;
     transition: all 0.3s ease;
+    position: relative;
 
     :hover {
         .dropdown {
             transition: all 0.3s ease;
-            top: ${v.headerHeight};
+            display: initial;
         }
     }
 `;
@@ -127,8 +132,7 @@ export const SNavLink = styled(Link)`
     @media ${b.md} {
         box-shadow: inset 0 -2px 0 ${({ theme, isActive }) => (!isActive ? "transparent" : theme.primary)};
         :hover {
-            box-shadow: inset 0
-                ${({ isActive }) => (isActive ? "-2px" : "-1px")} 0
+            box-shadow: inset 0 ${({ isActive }) => (isActive ? "-2px" : "-1px")} 0
                 ${({ theme }) => theme.primary};
         }
     }

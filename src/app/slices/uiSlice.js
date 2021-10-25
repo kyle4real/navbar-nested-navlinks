@@ -10,6 +10,9 @@ const uiSlice = createSlice({
         menuToggle(state) {
             state.menuOpen = !state.menuOpen;
         },
+        menuClose(state) {
+            state.menuOpen = false;
+        },
     },
 });
 

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../../../app/slices/uiSlice";
 import Nav from "./Nav/Nav";
 import {
-    SArrowIcon,
     SCenter,
     SCloseIcon,
     SCTAButton,
@@ -16,9 +15,6 @@ import {
     SMenu,
     SMenuIcon,
     SMenuToggleButton,
-    SNav,
-    SNavLink,
-    SNavLinkContainer,
     SRight,
 } from "./styles";
 
@@ -26,8 +22,11 @@ const Header = () => {
     const dispatch = useDispatch();
     const { menuOpen } = useSelector((state) => state.ui);
 
-    const menuToggleHander = () => {
+    const menuToggleHandler = () => {
         dispatch(uiActions.menuToggle());
+    };
+    const menuClosehandler = () => {
+        if (menuOpen) dispatch(uiActions.menuClose());
     };
 
     return (
@@ -36,7 +35,7 @@ const Header = () => {
             <SHeaderFixed>
                 <SHeader>
                     <SLeft>
-                        <SLogoLink to="/">
+                        <SLogoLink to="/" onClick={menuClosehandler}>
                             <SLogo />
                         </SLogoLink>
                     </SLeft>
@@ -45,14 +44,14 @@ const Header = () => {
                     </SCenter>
                     <SRight>
                         <SCTAButton>Sign In</SCTAButton>
-                        <SMenuToggleButton onClick={menuToggleHander}>
+                        <SMenuToggleButton onClick={menuToggleHandler}>
                             {!menuOpen ? <SMenuIcon /> : <SCloseIcon />}
                         </SMenuToggleButton>
                     </SRight>
                 </SHeader>
             </SHeaderFixed>
             <SMenu style={menuOpen ? { left: 0 } : {}}>
-                <Nav />
+                <Nav menuToggleHandler={menuToggleHandler} />
             </SMenu>
         </>
     );

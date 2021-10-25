@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
-import { v, b, s } from "../../../styles/variables";
+import { v, b } from "../../../styles/variables";
 
 import { FaReact } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";

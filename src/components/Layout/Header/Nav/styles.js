@@ -1,21 +1,9 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { v, b } from "../../../../styles/variables";
 
 import { IoMdArrowDropdown } from "react-icons/io";
 import { Link } from "react-router-dom";
-
-const btnReset = css`
-    cursor: pointer;
-    background: none;
-    border: none;
-    outline: none;
-    color: inherit;
-    font-family: inherit;
-    letter-spacing: inherit;
-    font-size: inherit;
-    padding: 0;
-`;
 
 export const SNav = styled.nav`
     width: auto;
@@ -29,13 +17,9 @@ export const SNav = styled.nav`
         display: flex;
     }
 `;
-export const SNavLinkContainer = styled.button`
-    ${btnReset}
-
+export const SNavLinkContainer = styled.div`
+    user-select: none;
     position: relative;
-
-    display: flex;
-    align-items: center;
     width: 100%;
     justify-content: space-between;
 
@@ -44,17 +28,23 @@ export const SNavLinkContainer = styled.button`
     }
 
     @media ${b.md} {
+        display: flex;
+        align-items: center;
         :not(:last-of-type) {
             margin-bottom: 0;
             margin-right: ${v.mdSpacing};
         }
     }
 `;
+export const SArrowContainer = styled.div`
+    svg {
+        color: ${({ isOpen, theme }) => (!isOpen ? "inherit" : theme.primary)};
+        transform: ${({ isOpen }) => (!isOpen ? "rotate(-90deg)" : "none")};
+    }
+`;
 export const SArrowIcon = styled(IoMdArrowDropdown)`
     display: block;
     margin-left: 4px;
-    color: ${({ isOpen, theme }) => (!isOpen ? "inherit" : theme.primary)};
-    transform: ${({ isOpen }) => (!isOpen ? "rotate(-90deg)" : "none")};
 `;
 export const SNavLink = styled(Link)`
     text-decoration: none;
@@ -62,6 +52,12 @@ export const SNavLink = styled(Link)`
     :hover {
         color: ${({ theme }) => theme.primary};
     }
+`;
+export const SNavLabelContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
 `;
 export const SNavLabel = styled.span`
     color: ${({ isOpen, theme }) => (!isOpen ? "inherit" : theme.primary)};

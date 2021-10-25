@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import Dropdown from "./Dropdown/Dropdown";
-import { SArrowIcon, SNav, SNavLabel, SNavLink, SNavLinkContainer } from "./styles";
+import {
+    SArrowContainer,
+    SArrowIcon,
+    SNav,
+    SNavLabel,
+    SNavLabelContainer,
+    SNavLink,
+    SNavLinkContainer,
+} from "./styles";
 
-const Nav = ({ navLinks }) => {
+const Nav = ({ navLinks, menuToggleHandler }) => {
     const [openDropdown, setOpenDropdown] = useState(null);
 
     const openDropdownHandler = (label) => {
@@ -10,20 +18,31 @@ const Nav = ({ navLinks }) => {
         setOpenDropdown(label);
     };
 
+    const onSelectCallback = () => {
+        if (menuToggleHandler) menuToggleHandler();
+        setOpenDropdown(null);
+    };
+
     return (
         <SNav>
             {navLinks.map(({ label, link, tree }, index) => {
                 const isOpen = openDropdown === label;
                 return (
-                    <SNavLinkContainer key={index} onClick={() => openDropdownHandler(label)}>
-                        {link && <SNavLink to={link}>{label}</SNavLink>}
-                        {!link && (
-                            <>
-                                <SNavLabel isOpen={isOpen}>{label}</SNavLabel>
-                                <SArrowIcon isOpen={isOpen} />
-                            </>
+                    <SNavLinkContainer key={index}>
+                        {link && (
+                            <SNavLink to={link} onClick={onSelectCallback}>
+                                {label}
+                            </SNavLink>
                         )}
-                        {isOpen && <Dropdown tree={tree} />}
+                        {!link && (
+                            <SNavLabelContainer onClick={() => openDropdownHandler(label)}>
+                                <SNavLabel isOpen={isOpen}>{label}</SNavLabel>
+                                <SArrowContainer isOpen={isOpen}>
+                                    <SArrowIcon />
+                                </SArrowContainer>
+                            </SNavLabelContainer>
+                        )}
+                        {isOpen && <Dropdown tree={tree} onSelectCallback={onSelectCallback} />}
                     </SNavLinkContainer>
                 );
             })}
@@ -36,17 +55,103 @@ Nav.defaultProps = {
         {
             label: "About",
             link: null,
-            tree: [],
+            tree: [
+                {
+                    label: "About Us",
+                    link: "/about-us",
+                    branches: null,
+                },
+                {
+                    label: "FAQ",
+                    link: "/faq",
+                    branches: null,
+                },
+                {
+                    label: "Legal",
+                    link: null,
+                    branches: [
+                        {
+                            label: "Terms of Service",
+                            link: "/terms-of-service",
+                            branches: null,
+                        },
+                        {
+                            label: "Privacy Policy",
+                            link: "/privacy-policy",
+                            branches: null,
+                        },
+                        {
+                            label: "Return Policy",
+                            link: "/return-policy",
+                            branches: null,
+                        },
+                    ],
+                },
+            ],
         },
         {
-            label: "Shop",
-            link: "/shop",
-            tree: null,
+            label: "Services",
+            link: null,
+            tree: [
+                {
+                    label: "Financial",
+                    link: null,
+                    branches: [
+                        {
+                            label: "Tools",
+                            link: null,
+                            branches: [
+                                {
+                                    label: "Analytics",
+                                    link: "/services/analytics",
+                                    branches: null,
+                                },
+                                {
+                                    label: "Inventory",
+                                    link: "/services/inventory",
+                                    branches: null,
+                                },
+                                {
+                                    label: "POS",
+                                    link: "/services/pos",
+                                    branches: null,
+                                },
+                            ],
+                        },
+                        {
+                            label: "Software",
+                            link: "/services/software",
+                            branches: null,
+                        },
+                    ],
+                },
+                {
+                    label: "Agro",
+                    link: "/agro",
+                    branches: null,
+                },
+                {
+                    label: "Pricing",
+                    link: null,
+                    branches: [
+                        {
+                            label: "Enterprise",
+                            link: "/services/enterprise",
+                            branches: null,
+                        },
+                        {
+                            label: "Small Business",
+                            link: "/services/small-business",
+                            branches: null,
+                        },
+                    ],
+                },
+            ],
         },
         {
             label: "Contact",
-            link: null,
-            tree: [],
+            link: "/contact",
+            tree: null,
         },
     ],
 };
